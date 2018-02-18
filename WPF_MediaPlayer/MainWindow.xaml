@@ -5,8 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_MediaPlayer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="WPF MediaPlayer" Height="350" Width="525" Loaded="MainWindow_OnLoaded">
+    <Window.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Padding" Value="5,2"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,2"/>
+            <Setter Property="FontSize" Value="12"/>
+        </Style>
+    </Window.Resources>
+    <DockPanel
+        Background="Black">
+        <DockPanel
+            DockPanel.Dock="Bottom"
+            Background="White">
+            <WrapPanel
+                DockPanel.Dock="Bottom">
+                <Button
+                    x:Name="PlayButton"
+                    Click="PlayButton_OnClick"
+                >Play</Button>
+                <Button
+                    x:Name="PauseButon"
+                    Click="PauseButon_OnClick"
+                >Pause</Button>
+                <Button
+                    x:Name="StopButon"
+                    Click="StopButon_OnClick"
+                >Stop</Button>
+                <Button
+                    x:Name="BackwardButton"
+                    Click="BackwardButton_OnClick"
+                >Backward</Button>
+                <Button
+                    x:Name="ForwardButton"
+                    Click="ForwardButton_OnClick"
+                >Forward</Button>
+                <Label
+                    Margin="2"
+                    Padding="2"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                >Volume:</Label>
+                <Slider
+                    x:Name="VolumeSlider"
+                    VerticalAlignment="Center"
+                    Width="100"
+                    Value="{Binding ElementName=VideoPlayer, Path=Volume}"
+                    Maximum="1"/>
+            </WrapPanel>
+            <DockPanel 
+                DockPanel.Dock="Bottom"
+                Background="White">
+                <Label
+                    DockPanel.Dock="Right"
+                    x:Name="TimerValue"
+                    Margin="2"
+                    Padding="2"
+                    Content="00:00:00/00:00:00"
+                    VerticalContentAlignment="Center"/>
+                <Slider
+                    x:Name="TimerSlider"
+                    VerticalAlignment="Center"
+                    ValueChanged="TimerSlider_OnValueChanged"
+                    Thumb.DragStarted="TimerSlider_OnDragStarted"
+                    Thumb.DragCompleted="TimerSlider_OnDragCompleted"/>
+            </DockPanel>
+        </DockPanel>
+        <MediaElement
+            x:Name="VideoPlayer"
+            Source="SampleVideo_720x480_5mb.mp4"
+            Volume="0.5"
+            LoadedBehavior="Manual"
+            MediaFailed="VideoPlayer_OnMediaFailed"
+            MediaOpened="VideoPlayer_OnMediaOpened"
+            Stretch="Uniform"/>
+    </DockPanel>
 </Window>
